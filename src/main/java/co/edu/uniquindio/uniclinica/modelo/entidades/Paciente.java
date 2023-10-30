@@ -1,11 +1,14 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.paciente.DetallePacienteDTO;
+import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
 import co.edu.uniquindio.uniclinica.modelo.enums.Eps;
 import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,37 +17,41 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Paciente extends Usuario implements Serializable {
 
     @Column(nullable = false)
-    private LocalDateTime FechaNacimiento;
+    private LocalDate FechaNacimiento;
 
     @Column
     private String alergias;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Eps eps;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private TipoSangre tipoSangre;
 
     @OneToMany(mappedBy = "paciente")
     private List<Cita> citas;
 
-    public Paciente(RegistroPacienteDTO pacienteDTO, String passwd) {
+    @OneToMany(mappedBy = "paciente")
+    private List<Transaccion> transacciones;
+
+    /*
+    public Paciente(RegistroPacienteDTO pacienteDTO, String password) {
         //datos de la cuenta
         this.setCorreo(pacienteDTO.correo());
-        this.setPassword(passwd);
+        this.setPassword(password);
 
         //datos del usuario
         this.setNombre(pacienteDTO.nombre());
         this.setCedula(pacienteDTO.cedula());
         this.setTelefono(pacienteDTO.telefono());
         this.setCiudad(pacienteDTO.ciudad());
-        this.setUrlFoto(pacienteDTO.urlImagen());
+        this.setUrlFoto(pacienteDTO.urlFoto());
 
         //datos del paciente
         this.setFechaNacimiento(pacienteDTO.fechaNacimiento());
@@ -67,4 +74,6 @@ public class Paciente extends Usuario implements Serializable {
         this.setAlergias( datos.alergias() );
         this.setTipoSangre( datos.tipoSangre() );
     }
+
+     */
 }

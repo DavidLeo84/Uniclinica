@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,17 +28,18 @@ public class Pqrs implements Serializable {
     @Column(name = "motivo",length = 200)
     private String motivo;
 
-    @Column(name = "id_cita")
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Cita cita;
 
     @Column(name = "paciente")
-    private Paciente paciente;
+    private Paciente paciente; // revisar si es valido el objeto para persistencia
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_pqrs")
     private EstadoPqrs estadoPqrs;
 
-    @Column(name = "mensaje")
-    private Mensaje mensajes;
+    @OneToMany(mappedBy = "pqrs")
+    private List<Mensaje> mensajes;
 
 }

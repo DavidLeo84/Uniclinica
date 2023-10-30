@@ -5,7 +5,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,8 +30,14 @@ public class Transaccion implements Serializable {
     private Pago pago;
 
     @ManyToOne
-    private Cliente cliente;
+    private Paciente paciente;
+
+    @ManyToOne
+    private Medico medico;
+
+    @OneToOne
+    private Atencion atencion;
 
     @ManyToMany
-    private List<Producto> productos;
+    private List<Medicamento> medicamentos;
 }

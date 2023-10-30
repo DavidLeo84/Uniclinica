@@ -1,10 +1,12 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.modelo.enums.EstadoCita;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,9 +39,15 @@ public class Cita implements Serializable {
     @JoinColumn(nullable = false)
     private Medico medico;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private EstadoCita estadoCita;
+
+    @OneToOne(mappedBy = "cita")
+    private Atencion atencion;
+
+    @OneToMany(mappedBy = "cita")
+    private List<Pqrs> pqrs;
 
     public Cita(LocalDateTime fechaCreacion,LocalDateTime  fechaCita, String motivo, Paciente paciente, Medico medico, EstadoCita estadoCita) {
         this.fechaCreacion = fechaCreacion;

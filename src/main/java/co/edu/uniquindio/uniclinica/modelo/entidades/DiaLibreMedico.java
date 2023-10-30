@@ -1,5 +1,6 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.medico.DiaLibreDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,15 +23,18 @@ public class DiaLibreMedico implements Serializable {
     @Column(nullable = false)
     private LocalDateTime fechaLibre;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Medico medico;
-
-    public DiaLibre(DiaLibreDTO diaLibreDTO, Medico medico){
-        this.setFechaLibre(diaLibreDTO.fechaLibre());
+/*
+    public DiaLibreMedico(DiaLibreDTO diaLibreDTO, Medico medico){
+        this.setFechaLibre(diaLibreDTO.fecha());
         this.setMedico(medico);
     }
     public void actualizar(DiaLibreDTO datos, Medico medico) {
-        this.setFechaLibre(datos.fechaLibre());
+        this.setFechaLibre(datos.fecha());
         this.setMedico(medico);
     }
+
+ */
 }

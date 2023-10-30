@@ -18,4 +18,5 @@ public enum Ciudad {
 
     Ciudad(String nombre) {
         this.nombre = nombre;
+    }
 }

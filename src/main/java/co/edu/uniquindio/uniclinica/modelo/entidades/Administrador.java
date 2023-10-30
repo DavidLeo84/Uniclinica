@@ -11,13 +11,10 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Administrador extends Cuenta implements Serializable {
 
-    @Id
-    @EqualsAndHashCode.Include
-    private int id;
 
     @Column(name = "nombre")
     private String NombreAdministrador;

@@ -28,7 +28,7 @@ public class Cuenta implements Serializable {
     @Column(length = 10, nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private EstadoUsuario estado;
 
