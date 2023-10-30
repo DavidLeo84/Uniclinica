@@ -13,6 +13,7 @@ import co.edu.uniquindio.uniclinica.servicios.interfaces.PacienteServicio;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -57,7 +58,11 @@ public class PacienteServicioImpl implements PacienteServicio {
         paciente.setEps(pacienteDTO.eps());
         paciente.setTipoSangre(pacienteDTO.tipoSangre());
         paciente.setCorreo(pacienteDTO.correo());
-        paciente.setPassword(paciente.getPassword());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode(pacienteDTO.password());
+        paciente.setPassword( passwordEncriptada );
+
         paciente.setEstado(EstadoUsuario.ACTIVO);
 
         Paciente pacienteNuevo = pacienteRepo.save(paciente);
@@ -443,10 +448,11 @@ public class PacienteServicioImpl implements PacienteServicio {
 
                 listaCitas.add(new ItemCitaDTO(
                         c.getCodigo(),
-                        c.getFechaCita(),
-                        c.getEstadoCita(),
-                        c.getMedico().getNombre(),
-                        c.getMedico().getEspecialidad()
+                        c.getPaciente().getCedula(),
+                        c.getPaciente().getNombre(),
+                        c.getMotivo(),
+                        c.getFechaCita()
+
                 ));
 
             }else {
@@ -471,10 +477,10 @@ public class PacienteServicioImpl implements PacienteServicio {
 
                 listaCitas.add(new ItemCitaDTO(
                         c.getCodigo(),
-                        c.getFechaCita(),
-                        c.getEstadoCita(),
-                        c.getMedico().getNombre(),
-                        c.getMedico().getEspecialidad()
+                        c.getPaciente().getCedula(),
+                        c.getPaciente().getNombre(),
+                        c.getMotivo(),
+                        c.getFechaCita()
                 ));
             }
             return listaCitas;
