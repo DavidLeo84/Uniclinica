@@ -12,7 +12,7 @@ public record ItemMedicoDTO(
         Especialidad especialidad
 ) {
 
-    /*
+
     public ItemMedicoDTO(Medico medico) {
         this(
                 medico.getId(),
@@ -23,5 +23,5 @@ public record ItemMedicoDTO(
         );
     }
 
-     */
+
 }

@@ -15,7 +15,9 @@ public interface PacienteServicio {
 
     int editarPerfil(DetallePacienteDTO pacienteDTO) throws Exception;
 
-    DetallePacienteDTO  verDetallePaciente(int pacienteDTO) throws Exception;
+    DetallePacienteDTO  verDetallePaciente(int codigo) throws Exception;
+
+    void inactivarCuenta(int id) throws Exception;
 
     void enviarLinkRecuperacion() throws Exception;
 
@@ -23,17 +25,16 @@ public interface PacienteServicio {
                            DetallePacienteDTO pacienteDTO) throws Exception;
 
 
-    int crearCita(DetalleMedicoCitaDTO medicoDTO, RegistroCitaDTO citaDTO,
-                  DetallePacienteDTO pacienteDTO, LocalDateTime fechaCita,
+    int crearCita(RegistroCitaDTO citaDTO, String cedulaPaciente, LocalDateTime fechaCita,
                   Especialidad especialidad) throws Exception;
 
     List<ItemMedicoDTO> listarPorEspecialidad(Especialidad especialidad) throws Exception;
 
-    int modificarCita(DetalleCitaDTO citaDTO) throws Exception;
+    DetalleCitaDTO modificarCita(int codigoCita) throws Exception;
 
-    void cancelarCita(DetalleCitaDTO citaDTO) throws Exception;
+    String cancelarCita(int codigoCita) throws Exception;
 
-    void crearPqrs(RegistroPqrsDTO pqrsDTO, DetallePacienteDTO pacienteDTO) throws Exception;
+    int crearPqrs(RegistroPqrsDTO pqrsDTO) throws Exception;
 
     List<ItemPqrsPacienteDTO> listarPqrsPaciente(int id) throws Exception;
 
@@ -41,15 +42,16 @@ public interface PacienteServicio {
 
     List<DetalleCitaDTO> listarCitasPaciente(int id) throws Exception;
 
-    List<ItemPacienteDTO> listarPacientes() throws Exception;
+    List<ItemCitaDTO> filtrarCitasPorFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin,
+                                           int codigoPaciente) throws Exception;
+    List<ItemCitaDTO> listarCitas() throws Exception;
+    DetalleCitaDTO verDetalleCita(int codigoCita) throws Exception;
 
-    List<ItemCitaDTO> filtrarCitasPorFecha(LocalDateTime fechaInicio,
-                                           LocalDateTime fechaFin,
-                                           DetallePacienteDTO pacienteDTO) throws Exception;
+    List<ItemCitaDTO> listarHistorialPaciente(int codigoPaciente) throws Exception;
 
-    List<ItemCitaDTO> filtrarCitasPorMedico(String nombreMedico) throws Exception;
+    List<ItemCitaDTO> listarCitasPendientesPaciente(int codigoPaciente) throws Exception;
 
-    DetalleCitaDTO verDetalleCita(int id) throws Exception;
+    List<ItemCitaDTO> filtrarCitasMedico(int idMedico) throws Exception;
 
-    void inactivarCuenta(int id) throws Exception;
+
 }

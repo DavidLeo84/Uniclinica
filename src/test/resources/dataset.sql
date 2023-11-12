@@ -1,38 +1,44 @@
-insert into cuenta values(6, 'nuevo@email.com', '$2a$10$Ji66OrNiC7bfwkPqxlHMeOBa1aqS0oftB2T5udKm5OE4uFOqxyRpO');
-insert into cuenta values(7, 'otro@email.com', '444');
-insert into cuenta values(8, 'ejemplo@email.com', '555');
-insert into cuenta values(9, 'prueba@email.com', '666');
-insert into cuenta values(10, 'demo@email.com', '777');
 
-insert into cuenta values(26, 'usuario@email.com', '888');
-insert into cuenta values(27, 'correo@email.com', '999');
-insert into cuenta values(28, 'email@email.com', '000');
-insert into cuenta values(29, 'test@email.com', '111');
-insert into cuenta values(30, 'dato@email.com', '222');
+insert into cuenta (id, correo, estado, password) values(1, 'nuevo@email.com', 0, '$2a$10$Ji66OrNiC7bfwkPqxlHMeOBa1aqS0oftB2T5udKm5OE4uFOqxyRpO');
+insert into cuenta (id, correo, estado, password) values(2, 'otro@email.com', 0 , '444');
+insert into cuenta (id, correo, estado, password) values(3, 'ejemplo@email.com', 0, '555');
+insert into cuenta (id, correo, estado, password) values(4, 'prueba@email.com', 0, '666');
+insert into cuenta (id, correo, estado, password) values(5, 'demo@email.com', 0, '777');
 
-insert into cuenta values(31, 'nuevo2@email.com', '333');
-insert into cuenta values(32, 'otro2@email.com', '444');
-insert into cuenta values(33, 'ejemplo2@email.com', '555');
-insert into cuenta values(34, 'prueba2@email.com', '666');
-insert into cuenta values(35, 'demo2@email.com', '777');
+insert into cuenta (id, correo, estado, password) values(6, 'usuario@email.com', 0, '888');
+insert into cuenta (id, correo, estado, password) values(7, 'correo@email.com', 0, '999');
+insert into cuenta (id, correo, estado, password) values(8, 'email@email.com', 0, '000');
+insert into cuenta (id, correo, estado, password) values(9, 'test@email.com', 0, '111');
+insert into cuenta (id, correo, estado, password) values(10, 'dato@email.com', 0, '222');
 
-insert into paciente values('11111111', 0, 0, 'Nuevo Paciente', '1234567', 'url_foto', 'Sin alergias', 1,'1985-03-15', 1, 6);
-insert into paciente values('22222222', 1, 0, 'Otro Paciente', '2345678', 'url_foto', 'Alergia a medicamentos',2, '1990-07-20', 1, 7);
-insert into paciente values('33333333', 0, 0, 'Ejemplo Paciente', '3456789', 'url_foto', 'Sin alergias', 3, '1977-11-10', 1, 8);
-insert into paciente values('44444444', 1, 0, 'Prueba Paciente', '4567890', 'url_foto', 'Alergia al polen', 2, '2002-05-30', 0, 9);
-insert into paciente values('55555555', 0, 0, 'Demo Paciente', '5678901', 'url_foto', 'Sin alergias', 5, '1996-12-25', 0, 10);
+insert into cuenta (id, correo, estado, password) values(11, 'nuevo2@email.com',0, '333');
+insert into cuenta (id, correo, estado, password) values(12, 'otro2@email.com',0 , '444');
+insert into cuenta (id, correo, estado, password) values(13, 'ejemplo2@email.com',0 , '555');
+insert into cuenta (id, correo, estado, password) values(14, 'prueba2@email.com',0 , '666');
+insert into cuenta (id, correo, estado, password) values(15, 'demo2@email.com',0 , '777');
 
-insert into medico values('66666666', 0, 0, 'Usuario Médico', '6789012', 'url_foto', 0, 26);
-insert into medico values('77777777', 1, 0, 'Correo Médico', '7890123', 'url_foto', 1, 27);
-insert into medico values('88888888', 0, 0, 'Email Médico', '8901234', 'url_foto', 2, 28);
-insert into medico values('99999999', 1, 0, 'Test Médico', '9012345', 'url_foto', 3, 29);
-insert into medico values('00000000', 0, 0, 'Dato Médico', '0123456', 'url_foto', 4, 30);
+/*
+INSERT INTO paciente VALUES('11111111', 0, 'Nuevo Paciente', '1234567', 0, 'url_foto', '1985-03-15','Sin alergias', 1, 1);
+insert into paciente values('22222222', 1, 'Otro Paciente', '2345678', 1, 'url_foto', '1990-07-20', 'Alergia a medicamentos', 2, 2);
+insert into paciente values('33333333', 2, 'Ejemplo Paciente', '3456789', 2, 'url_foto', '1977-11-10', 'Sin alergias', 3, 3);
+insert into paciente values('44444444', 3,  'Prueba Paciente', '4567890', 1, 'url_foto', '2002-05-30', 'Alergia al polen', 2, 4);
+insert into paciente values('55555555', 4, 'Demo Paciente', '5678901', 2, 'url_foto', '1996-12-25', 'Sin alergias', 6, 5);
 
-insert into administrador values(31);
-insert into administrador values(32);
-insert into administrador values(33);
-insert into administrador values(34);
-insert into administrador values(35);
+
+ */
+
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('66666666', 0, 'nombre Médico1', '6789012', 1, 'url_foto', 0, 6);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('77777777', 1, 'nombre Médico2', '7890123', 2, 'url_foto', 1, 7);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('88888888', 0, 'nombre Médico3', '8901234', 3, 'url_foto', 2, 8);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('99999999', 1, 'nombre Médico4', '9012345', 2, 'url_foto', 1, 9);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('00000000', 0, 'nombre Médico5', '0123456', 1, 'url_foto', 3, 10);
+
+/*
+insert into administrador values('admin1',11);
+insert into administrador values('admin2',12);
+insert into administrador values('admin3',13);
+insert into administrador values('admin4',14);
+insert into administrador values('admin5',15);
 
 insert into cita (codigo, estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values(6,0,'2023-11-15 09:30:00', NOW(), 'Motivo 1', 26,6);
 insert into cita (codigo, estado, fecha_cita, fecha_creacion, motivo, medico_codigo, paciente_codigo) values(7,0,'2023-11-16 10:00:00', NOW(), 'Motivo 2', 26,7);
@@ -69,3 +75,5 @@ insert into mensaje values(7,'Estoy bien, gracias','2023-10-17 14:30:00', 'Respu
 insert into mensaje values(8,'Más contenido','2023-10-18 14:30:00', 'Respuesta', 8,8,6);
 insert into mensaje values(9,'Más contenido','2023-10-19 14:30:00', 'Respuesta', 9,9,7);
 insert into mensaje values(10,'Más contenido','2023-10-20 14:30:00', 'Respuesta', 10,10,7);
+
+ */

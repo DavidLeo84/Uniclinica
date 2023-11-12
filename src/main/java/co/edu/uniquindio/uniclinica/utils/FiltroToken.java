@@ -2,16 +2,13 @@ package co.edu.uniquindio.uniclinica.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-import java.util.logging.Filter;
+
 
 @Component
 @RequiredArgsConstructor

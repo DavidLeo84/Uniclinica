@@ -13,20 +13,15 @@ public record RespuestaDTO(
         @Lob
         String contenido,
         String nombreUsuario,
-        LocalDateTime fecha,
-        String mensaje
+        LocalDateTime fecha
 ) {
-
-    /*
     public RespuestaDTO(Mensaje mensaje){
         this(
                 mensaje.getCodigo(),
                 mensaje.getContenido(),
                 mensaje.getCuenta().getCorreo(),
-                mensaje.getFechaMensaje(),
-                mensaje.getContenido()
+                mensaje.getFechaMensaje()
+
         );
     }
-
-     */
 }

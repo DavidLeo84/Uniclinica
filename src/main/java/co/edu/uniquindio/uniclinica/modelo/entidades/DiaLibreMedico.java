@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,7 +22,7 @@ public class DiaLibreMedico implements Serializable {
     private int codigo;
 
     @Column(nullable = false)
-    private LocalDateTime fechaLibre;
+    private LocalDate fechaLibre;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

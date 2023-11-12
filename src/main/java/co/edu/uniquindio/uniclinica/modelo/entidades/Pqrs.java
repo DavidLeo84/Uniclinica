@@ -1,6 +1,7 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
 import co.edu.uniquindio.uniclinica.modelo.enums.EstadoPqrs;
+import co.edu.uniquindio.uniclinica.modelo.enums.TipoPqrs;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,21 +23,26 @@ public class Pqrs implements Serializable {
     @EqualsAndHashCode.Include
     private int codigo;
 
-    @Column(name = "fecha_creacion")
+    @Column
     private LocalDateTime FechaCreacion;
 
-    @Column(name = "motivo",length = 200)
-    private String motivo;
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    TipoPqrs tipoPqrs;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Cita cita;
 
-    @Column(name = "paciente")
+    @Column
     private Paciente paciente; // revisar si es valido el objeto para persistencia
 
+    @Column
+    @Lob
+    private String motivo;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "estado_pqrs")
+    @Column
     private EstadoPqrs estadoPqrs;
 
     @OneToMany(mappedBy = "pqrs")

@@ -8,14 +8,13 @@ public record RegistroAtencionDTO(
 
         @NotNull
         int codigoCita,
-        @NotNull
-        int codigoMedico,
         @Lob
-        String notasMedicas,
+        String diagnostico,
         @Lob
         String tratamiento,
         @Lob
-        String diagnostico,
+        String notasMedicas,
+
         @Positive
         float precio
 ) {

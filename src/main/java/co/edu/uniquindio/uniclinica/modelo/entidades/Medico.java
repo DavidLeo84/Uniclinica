@@ -19,7 +19,7 @@ import java.util.List;
 //@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Medico extends Usuario implements Serializable {
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Especialidad especialidad;
 
@@ -36,7 +36,7 @@ public class Medico extends Usuario implements Serializable {
     @OneToMany(mappedBy = "medico")
     private List<Transaccion> transacciones;
 
-    /*
+
     public Medico(RegistroMedicoDTO medicoDTO, String password){
         this.setCedula(medicoDTO.cedula());
         this.setTelefono(medicoDTO.telefono());
@@ -59,5 +59,5 @@ public class Medico extends Usuario implements Serializable {
         this.setUrlFoto(medicoDTO.urlFoto());
     }
 
-     */
+
 }

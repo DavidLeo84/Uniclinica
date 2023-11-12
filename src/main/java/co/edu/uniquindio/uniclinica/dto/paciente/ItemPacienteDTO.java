@@ -5,13 +5,13 @@ import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
 
 public record ItemPacienteDTO(
 
-        int codigo,
+        int id,
         String cedula,
         String nombre,
         Ciudad ciudad
 ) {
 
-    /*
+
     public ItemPacienteDTO(Paciente paciente){
         this(
                 paciente.getId(),
@@ -21,5 +21,5 @@ public record ItemPacienteDTO(
         );
     }
 
-     */
+
 }

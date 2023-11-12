@@ -16,8 +16,8 @@ public class Atencion implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int codigo;
 
     @Lob
     private String diagnostico;

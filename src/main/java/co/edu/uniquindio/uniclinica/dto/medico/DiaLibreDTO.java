@@ -9,9 +9,9 @@ public record DiaLibreDTO(
 
         int codigo,
         int codigoMedico,
-        LocalDateTime fecha
+        LocalDate fecha
 ) {
-/*
+
     public DiaLibreDTO(DiaLibreMedico diaLibre) {
         this(
                 diaLibre.getCodigo(),
@@ -19,6 +19,4 @@ public record DiaLibreDTO(
                 diaLibre.getFechaLibre()
         );
     }
-
- */
 }

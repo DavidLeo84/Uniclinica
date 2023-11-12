@@ -6,7 +6,9 @@ import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
 import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
 import co.edu.uniquindio.uniclinica.modelo.enums.Eps;
 import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
+import co.edu.uniquindio.uniclinica.servicios.interfaces.AdministradorServicio;
 import co.edu.uniquindio.uniclinica.servicios.interfaces.PacienteServicio;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
+@Transactional
 public class PacienteServicioTest {
 
     @Autowired
     private PacienteServicio pacienteServicio;
+    private AdministradorServicio administradorServicio;
 
     @Test
     //@Sql("classpath:dataset.sql")
@@ -50,33 +54,33 @@ public class PacienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void editarPerfilTest() throws Exception{
 
-        DetallePacienteDTO guardado = pacienteServicio.verDetallePaciente(1);
+        DetallePacienteDTO guardado = pacienteServicio.verDetallePaciente(6);
 
         DetallePacienteDTO modificado = new DetallePacienteDTO(
-                guardado.codigo(),
                 guardado.cedula(),
-                guardado.nombre(),
-                "3002345679",
-                guardado.correo(),
-                guardado.fechaNacimiento(),
-                guardado.urlFoto(),
                 guardado.ciudad(),
-                guardado.eps(),
+                guardado.nombre(),
+                "111111",
                 guardado.tipoSangre(),
-                guardado.alergias()
+                guardado.urlFoto(),
+                guardado.fechaNacimiento(),
+                guardado.alergias(),
+                guardado.eps(),
+                guardado.codigo()
+
         );
         pacienteServicio.editarPerfil(modificado);
 
-        DetallePacienteDTO objetoModificado = pacienteServicio.verDetallePaciente(1);
+        DetallePacienteDTO objetoModificado = pacienteServicio.verDetallePaciente(6);
 
-        Assertions.assertEquals("3002345679", objetoModificado.telefono());
+        Assertions.assertEquals("111111", objetoModificado.telefono());
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void inactivarTest() throws Exception{
 
-        pacienteServicio.inactivarCuenta(1);
+        pacienteServicio.inactivarCuenta(6);
 
         Assertions.assertThrows(Exception.class,() ->pacienteServicio.verDetallePaciente(1));
 
@@ -86,7 +90,7 @@ public class PacienteServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarTest() throws Exception{
 
-        List<ItemPacienteDTO> lista = pacienteServicio.listarPacientes();
+        List<ItemPacienteDTO> lista = administradorServicio.listarPacientes();
 
     }
 }

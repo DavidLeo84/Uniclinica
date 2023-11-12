@@ -19,8 +19,8 @@ public class HorarioMedico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
 
-    @Column(nullable = false)
-    private String dia;
+    //@Column(nullable = false)
+    //private String dia;
 
     @Column(nullable = false)
     private LocalDateTime horaInicio;
@@ -31,12 +31,14 @@ public class HorarioMedico implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Medico medico;
 
-    /*
+
+
+
     public HorarioMedico(HorarioDTO h, Medico medico){
-        this.setDia(h.dia());
+        //this.setDia(h.dia());
         this.setHoraInicio(h.horaInicio());
         this.setHoraSalida(h.horaSalida());
         this.setMedico(medico);
     }
-     */
+
 }

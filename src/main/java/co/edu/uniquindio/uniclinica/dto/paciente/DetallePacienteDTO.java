@@ -14,33 +14,33 @@ import java.time.LocalDateTime;
 
 public record DetallePacienteDTO(
 
-        @NotNull
-        int codigo,
-        @NotBlank
         @Length(max = 10, message = "La cédula debe tener máximo 10 caracteres")
         String cedula,
+        @NotNull
+        Ciudad ciudad,
         @NotBlank
         @Length(max = 200, message = "El nombre debe tener máximo 200 caracteres")
         String nombre,
         @NotBlank
         @Length(max = 20, message = "El teléfono debe tener máximo 20 caracteres")
         String telefono,
+        @NotNull
+        TipoSangre tipoSangre,
         @NotBlank
-        @Length(max = 80, message = "El correo debe tener máximo 80 caracteres")
-        @Email(message = "Ingrese una dirección de correo electrónico válida")
-        String correo,
+        String urlFoto,
         @NotNull
         @Past(message = "Seleccione una fecha de nacimiento correcta")
         LocalDate fechaNacimiento,
         @NotBlank
-        String urlFoto,
-        @NotNull
-        Ciudad ciudad,
+        String alergias,
         @NotNull
         Eps eps,
         @NotNull
-        TipoSangre tipoSangre,
-        @NotBlank
-        String alergias
+        int codigo
+
+        //@NotBlank
+       // @Length(max = 80, message = "El correo debe tener máximo 80 caracteres")
+        //@Email(message = "Ingrese una dirección de correo electrónico válida")
+        //String correo,
 ) {
 }

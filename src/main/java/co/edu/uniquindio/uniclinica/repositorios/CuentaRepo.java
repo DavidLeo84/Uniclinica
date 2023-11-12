@@ -9,7 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CuentaRepo extends JpaRepository<Cuenta, Integer> {
 
-    Cuenta findByCorreo(String username);
-
     Optional<Cuenta> findByCorreo(String correo);
 }

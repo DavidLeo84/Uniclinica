@@ -4,23 +4,23 @@ import co.edu.uniquindio.uniclinica.modelo.entidades.HorarioMedico;
 import co.edu.uniquindio.uniclinica.modelo.entidades.Medico;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record HorarioDTO(
 
-        String dia,
+        //String dia,
         LocalDateTime horaInicio,
         LocalDateTime horaSalida,
+
         Medico medico
 ) {
-/*
+
     public HorarioDTO(HorarioMedico h){
         this(
-                h.getDia(),
+                //h.getDia(),
                 h.getHoraInicio(),
                 h.getHoraSalida(),
                 h.getMedico()
         );
     }
-
- */
 }

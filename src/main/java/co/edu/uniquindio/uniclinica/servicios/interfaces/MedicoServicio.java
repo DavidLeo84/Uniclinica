@@ -8,27 +8,26 @@ import co.edu.uniquindio.uniclinica.dto.paciente.DetallePacienteDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.ItemCitaDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public interface MedicoServicio {
 
-    List<ItemCitaDTO> listarCitasPendientes(DetalleMedicoDTO medicoDTO) throws Exception;
+    List<ItemCitaDTO> listarCitasPendientes(int idMedico) throws Exception;
 
-    List<ItemCitaDTO> listarCitasPendientesDia(DetalleMedicoDTO medicoDTO) throws Exception;
+    List<ItemCitaDTO> listarCitasPendientesDia(int idMedico) throws Exception;
 
-    void atenderCita(DetallePacienteDTO pacienteDTO, DetalleMedicoDTO medicoDTO,
-                     RegistroAtencionDTO atencionDTO) throws Exception;
+    RegistroAtencionDTO atenderCita(String cedulaPaciente, int idMedico) throws Exception;
 
-    List<ItemAtencionDTO> listarAtencionesPaciente(DetallePacienteDTO pacienteDTO) throws Exception ;
+    List<ItemAtencionDTO> listarAtencionesPaciente(String cedulaPaciente) throws Exception ;
 
-    LocalDateTime agendarDiaLibre(DetalleMedicoDTO medicoDTO,
-                                  DiaLibreDTO fechaLibreDTO) throws Exception;
+    LocalDate agendarDiaLibre(int idMedico, LocalDate fechaLibre) throws Exception;
 
-    LocalDateTime modificarDiaLibre(DetalleMedicoDTO medicoDTO, LocalDateTime nuevoDiaLibre) throws Exception;
+    LocalDate modificarDiaLibre(int idMedico, LocalDate nuevoDiaLibre) throws Exception;
 
-    String cancelarDiaLibre(DetalleMedicoDTO medicoDTO) throws Exception;
+    String cancelarDiaLibre(int idMedico) throws Exception;
 
-    List<ItemCitaDTO> listarCitasRealizadasMedico(DetalleMedicoDTO medicoDTO) throws Exception;
+    List<ItemCitaDTO> listarCitasRealizadasMedico(int idMedico) throws Exception;
 }

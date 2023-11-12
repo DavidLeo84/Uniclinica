@@ -6,23 +6,18 @@ import co.edu.uniquindio.uniclinica.modelo.enums.EstadoPqrs;
 import java.time.LocalDateTime;
 
 public record ItemPqrsDTO(
-
         int codigo,
         EstadoPqrs estadoPqrs,
-        LocalDateTime fecha,
-        String motivo,
+        LocalDateTime fechaCreacion,
         String nombrePaciente
 ) {
 
-  /*  public ItemPqrsDTO(Pqrs p) {
+    public ItemPqrsDTO(Pqrs p) {
         this(
                 p.getCodigo(),
                 p.getEstadoPqrs(),
                 p.getFechaCreacion(),
-                p.getMotivo(),
-                p.getPaciente().getNombre()
+                p.getCita().getPaciente().getNombre()
         );
     }
-
-   */
 }

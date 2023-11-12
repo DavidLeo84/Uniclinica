@@ -8,7 +8,7 @@ public record RegistroRespuestaDTO(
         @Positive
         int codigoCuenta,
         @Positive
-        int codigoPQRS,
+        int codigoPqrs,
         @Positive
         int codigoMensaje,
         @NotBlank

@@ -24,7 +24,7 @@ public record RegistroPacienteDTO(
         @NotNull
         Ciudad ciudad,
         @NotNull
-        @Future(message = "Seleccione una fecha de nacimiento correcta")
+        @Past(message = "Seleccione una fecha de nacimiento correcta")
         LocalDate fechaNacimiento,
         //@NotEmpty List<Alergia> alergias, //para guardar en una bd si hablo de una lista de alergias debo crear una E Alergias, no puede ser una lista de enums si no una relación de uno a muchos
         @NotBlank

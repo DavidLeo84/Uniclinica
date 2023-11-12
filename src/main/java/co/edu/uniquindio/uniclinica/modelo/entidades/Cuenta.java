@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Inheritance(strategy = InheritanceType.JOINED)
+@ToString
 public class Cuenta implements Serializable {
 
     @Id
@@ -25,7 +26,7 @@ public class Cuenta implements Serializable {
     @Column(unique = true, length = 80, nullable = false)
     private String correo;
 
-    @Column(length = 10, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.ORDINAL)

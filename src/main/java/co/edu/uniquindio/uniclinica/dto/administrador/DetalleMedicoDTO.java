@@ -16,7 +16,7 @@ import java.util.List;
 
 public record DetalleMedicoDTO(
 
-        @Positive
+        @NotNull
         int codigo,
         @NotEmpty
         @Length(max = 200)
@@ -38,10 +38,10 @@ public record DetalleMedicoDTO(
         @NotEmpty
         String urlFoto,
         @NotEmpty
-        List<HorarioMedico> horarios,
-        List<DiaLibreMedico> diaLibre
+        List<HorarioDTO> horarios
+        //List<DiaLibreMedico> diaLibre
 ) {
-        /*
+
         public DetalleMedicoDTO(Medico medico, List<HorarioDTO> horarios){
                 this(
                         medico.getId(),
@@ -52,10 +52,9 @@ public record DetalleMedicoDTO(
                         medico.getTelefono(),
                         medico.getCorreo(),
                         medico.getUrlFoto(),
-                        medico.getHorarioMedico(),
-                        medico.getDiaLibre()
+                        horarios
                 );
         }
 
-         */
+
 }
