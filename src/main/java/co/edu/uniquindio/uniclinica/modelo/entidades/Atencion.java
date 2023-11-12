@@ -1,5 +1,6 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.medico.RegistroAtencionDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +16,8 @@ public class Atencion implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int codigo;
 
     @Lob
     private String diagnostico;
@@ -27,14 +28,21 @@ public class Atencion implements Serializable {
     @Lob
     private String notasMedicas;
 
+    private float precio;
+
+    @OneToOne(mappedBy = "atencion")
+    private Transaccion transaccion;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Cita cita;
 
+    /*
     public Atencion(RegistroAtencionDTO datos, Cita cita){
         this.setDiagnostico(datos.diagnostico());
         this.setTratamiento(datos.tratamiento());
         this.setNotasMedicas(datos.notasMedicas());
+        this.setPrecio(datos.precio());
         this.setCita(cita);
     }
 
@@ -44,4 +52,6 @@ public class Atencion implements Serializable {
         this.setNotasMedicas(datos.notasMedicas());
         this.setCita(cita);
     }
+
+    */
 }

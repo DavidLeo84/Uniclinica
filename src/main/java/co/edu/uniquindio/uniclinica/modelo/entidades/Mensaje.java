@@ -1,5 +1,6 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.administrador.RegistroRespuestaDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +27,7 @@ public class Mensaje implements Serializable {
     @Lob
     private String contenido;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Cuenta cuenta;
 
@@ -34,10 +35,13 @@ public class Mensaje implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Pqrs pqrs;
 
+    /*
     public Mensaje(RegistroRespuestaDTO datos, LocalDateTime fecha, Pqrs pqrs, Cuenta cuenta) {
         this.setContenido(datos.mensaje());
         this.setFechaMensaje(fecha);
         this.setPqrs(pqrs);
         this.setCuenta(cuenta);
     }
+
+     */
 }

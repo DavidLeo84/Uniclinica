@@ -1,10 +1,11 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.administrador.HorarioDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -18,22 +19,26 @@ public class HorarioMedico implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
 
-    @Column(nullable = false)
-    private String dia;
+    //@Column(nullable = false)
+    //private String dia;
 
     @Column(nullable = false)
-    private LocalTime horaInicio;
+    private LocalDateTime horaInicio;
 
     @Column(nullable = false)
-    private LocalTime horaSalida;
+    private LocalDateTime horaSalida;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Medico medico;
 
+
+
+
     public HorarioMedico(HorarioDTO h, Medico medico){
-        this.setDia(h.dia());
+        //this.setDia(h.dia());
         this.setHoraInicio(h.horaInicio());
         this.setHoraSalida(h.horaSalida());
         this.setMedico(medico);
     }
+
 }
