@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Positive;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public record DetalleMedicoDTO(
@@ -21,8 +22,8 @@ public record DetalleMedicoDTO(
         @NotEmpty
         @Length(max = 200)
         String nombre,
-        @NotEmpty
-        @Length(max = 10)
+        @NotNull
+
         String cedula,
         @NotNull
         Ciudad ciudad,
@@ -54,6 +55,8 @@ public record DetalleMedicoDTO(
                         medico.getUrlFoto(),
                         horarios
                 );
+
+
         }
 
 

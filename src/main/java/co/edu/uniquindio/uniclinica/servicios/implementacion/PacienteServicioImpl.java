@@ -4,6 +4,8 @@ import co.edu.uniquindio.uniclinica.dto.RespuestaDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.ItemMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.RegistroMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.RegistroRespuestaDTO;
+import co.edu.uniquindio.uniclinica.servicios.validaciones.Validacion;
+import co.edu.uniquindio.uniclinica.servicios.validaciones.excepciones.ResourceNotFoundException;
 import co.edu.uniquindio.uniclinica.dto.paciente.*;
 import co.edu.uniquindio.uniclinica.modelo.entidades.*;
 import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
@@ -37,17 +39,14 @@ public class PacienteServicioImpl implements PacienteServicio {
     private final MensajeRepo mensajeRepo;
     private final CitaRepo citaRepo;
     private final HorarioRepo horarioRepo;
+    private final Validacion validacion;
 
 
     @Override
-    public int registrarse(RegistroPacienteDTO pacienteDTO) throws Exception {
+    public Paciente registrarse(RegistroPacienteDTO pacienteDTO) {
 
-        if (estaRepetidaCedula(pacienteDTO.cedula())) {
-            throw new Exception("La cédula " + pacienteDTO.cedula() + " ya está en uso");
-        }
-        if (estaRepetidoCorreo(pacienteDTO.correo())) {
-            throw new Exception("El correo " + pacienteDTO.cedula() + " ya está en uso");
-        }
+        validacion.validarPaciente(pacienteDTO);
+
         Paciente paciente = new Paciente();
         paciente.setCedula(pacienteDTO.cedula());
         paciente.setTelefono(pacienteDTO.telefono());
@@ -66,16 +65,16 @@ public class PacienteServicioImpl implements PacienteServicio {
         paciente.setEstado(EstadoUsuario.ACTIVO);
         pacienteRepo.save(paciente);
 
-        return paciente.getId();
+        return paciente;
     }
 
     @Override
-    public int editarPerfil(DetallePacienteDTO pacienteDTO) throws Exception {
+    public String editarPerfil(DetallePacienteDTO pacienteDTO) {
 
         Optional<Paciente> optional = pacienteRepo.findById(pacienteDTO.codigo());
 
         if (optional.isEmpty()) {
-            throw new Exception("No existe un paciente con el código " + pacienteDTO.codigo());
+            throw new ResourceNotFoundException("No existe un paciente con el código " + pacienteDTO.codigo());
         }
 
         Paciente buscado = optional.get();
@@ -90,7 +89,7 @@ public class PacienteServicioImpl implements PacienteServicio {
 
         pacienteRepo.save(buscado);
 
-        return buscado.getId();
+        return "Ha sido exitoso los cambios realizados";
     }
 
     @Override
@@ -315,7 +314,6 @@ public class PacienteServicioImpl implements PacienteServicio {
         nuevaPqrs.setTipoPqrs(pqrsDTO.tipoPqrs());
         nuevaPqrs.setMotivo(pqrsDTO.motivo());
         nuevaPqrs.getCita().setCodigo(pqrsDTO.codigoCita());
-        nuevaPqrs.getPaciente().setId(pqrsDTO.codigoPaciente());
         nuevaPqrs.setEstadoPqrs(EstadoPqrs.NUEVO);
         convertirRespuestasPacienteDTO(mensajes);
         pqrsRepo.save(nuevaPqrs);

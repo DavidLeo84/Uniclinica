@@ -24,8 +24,13 @@ public class Mensaje implements Serializable {
     @Column(nullable = false)
     private LocalDateTime fechaMensaje;
 
+    private String tipo;
+
     @Lob
     private String contenido;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Mensaje mensaje;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)

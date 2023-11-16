@@ -1,14 +1,10 @@
 package co.edu.uniquindio.uniclinica.test;
 
-import co.edu.uniquindio.uniclinica.dto.administrador.DetalleMedicoDTO;
-import co.edu.uniquindio.uniclinica.dto.administrador.HorarioDTO;
-import co.edu.uniquindio.uniclinica.dto.administrador.RegistroMedicoDTO;
+import co.edu.uniquindio.uniclinica.dto.administrador.*;
+import co.edu.uniquindio.uniclinica.dto.paciente.ItemPqrsDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
 import co.edu.uniquindio.uniclinica.modelo.entidades.Medico;
-import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
-import co.edu.uniquindio.uniclinica.modelo.enums.Eps;
-import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
-import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
+import co.edu.uniquindio.uniclinica.modelo.enums.*;
 import co.edu.uniquindio.uniclinica.servicios.interfaces.AdministradorServicio;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -58,7 +54,7 @@ public class AdministradorServicioTest {
         }
 
     }
-
+/*
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarMedico()  {
@@ -74,15 +70,56 @@ public class AdministradorServicioTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
 
+ */
 
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void actualizarMedico() throws Exception {
+        DetalleMedicoDTO guardado = administradorServicio.obtenerMedico(6);
+        DetalleMedicoDTO modificado = new DetalleMedicoDTO(
+                guardado.codigo(),
+                guardado.cedula(),
+                guardado.nombre(),
+                guardado.ciudad(),
+                guardado.especialidad(),
+                "111111",
+                guardado.correo(),
+                guardado.urlFoto(),
+                guardado.horarios()
+        );
+
+        administradorServicio.actualizarMedico(modificado);
+        DetalleMedicoDTO objetoModificado = administradorServicio.obtenerMedico(6);
+        Assertions.assertEquals("111111", objetoModificado.telefono());
     }
 
     @Test
     @Sql("classpath:dataset.sql")
     public void eliminarMedico() throws Exception {
         administradorServicio.eliminarMedico(6);
-        Assertions.assertThrows(Exception.class, () -> administradorServicio.eliminarMedico(6));
+        Assertions.assertThrows(Exception.class, () -> administradorServicio.obtenerMedico(6));
     }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarMedicos() throws Exception {
+        List<ItemMedicoDTO> lista = administradorServicio.listarMedicos();
+        lista.forEach(System.out::println);
+        Assertions.assertEquals(5, lista.size());
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void cambiarEstadoPQRS() throws Exception {
+        DetallePqrsDTO guardado = administradorServicio.verDetallePqrs(1);
+        administradorServicio.cambiarEstadoPqrs(
+                guardado.codigo(),
+                EstadoPqrs.RESUELTO
+        );
+        DetallePqrsDTO objetoModificado = administradorServicio.verDetallePqrs(1);
+        Assertions.assertEquals(EstadoPqrs.RESUELTO, objetoModificado.estadoPqrs());
+    }
+
 
 }

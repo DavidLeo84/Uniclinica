@@ -16,7 +16,7 @@ public interface AdministradorServicio {
 
     Medico crearMedico(RegistroMedicoDTO medicoDTO)throws Exception;
 
-    String actualizarMedico(DetalleMedicoDTO medicoDTO) throws Exception;
+    Medico actualizarMedico(DetalleMedicoDTO medicoDTO) throws Exception;
 
     String eliminarMedico(int codigo) throws Exception;
 

@@ -3,6 +3,7 @@ package co.edu.uniquindio.uniclinica.test;
 import co.edu.uniquindio.uniclinica.dto.paciente.DetallePacienteDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.ItemPacienteDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Paciente;
 import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
 import co.edu.uniquindio.uniclinica.modelo.enums.Eps;
 import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
@@ -46,7 +47,7 @@ public class PacienteServicioTest {
                 "marubiel@gmail.com",
                 "123456"
         );
-        int nuevo = pacienteServicio.registrarse(pacienteDTO);
+        Paciente nuevo = pacienteServicio.registrarse(pacienteDTO);
         Assertions.assertNotEquals(0,nuevo);
     }
 

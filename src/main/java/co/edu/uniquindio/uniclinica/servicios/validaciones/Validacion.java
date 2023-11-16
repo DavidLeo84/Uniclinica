@@ -1,5 +1,6 @@
 package co.edu.uniquindio.uniclinica.servicios.validaciones;
 
+import co.edu.uniquindio.uniclinica.dto.administrador.DetalleMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.RegistroMedicoDTO;
 import co.edu.uniquindio.uniclinica.modelo.entidades.*;
@@ -25,12 +26,14 @@ public class Validacion {
     private final MensajeRepo mensajeRepo;
 
 
-    public void existenciaMedico(int id, String cedula) {
+    public Medico existenciaMedico(int id) {
 
         Medico medico = medicoRepo.findById(id).orElse(null);
 
-        if (medico == null && medico.getCedula().equals(cedula))
+        if (medico == null)
             throw new ResourceNotFoundException("El medico con " + id + " no se encuentra registrado");
+
+        return medico;
     }
 
     public void existenciaPaciente(int id, String cedula) {
@@ -43,7 +46,7 @@ public class Validacion {
 
     public void existenciaCita(int codigo) {
 
-        Cita cita = citaRepo.findById().orElse(null);
+        Cita cita = citaRepo.findById(codigo).orElse(null);
 
         if (cita == null) {
             throw new ResourceNotFoundException("La cita con " + codigo + " no se encuentra registrada");
@@ -64,8 +67,17 @@ public class Validacion {
             throw new ResourceNotFoundException("La cédula "+medicoDTO.cedula() + " está registrada con otro usuario");
         }
         if (estaRepetidoCorreoMedico(medicoDTO.correo())){
-            throw new ResourceNotFoundException("El correo "+medicoDTO.correo() + " ");
-        }está registrado con otro usuario
+            throw new ResourceNotFoundException("El correo "+medicoDTO.correo() + " está registrado con otro usuario");
+        }
+    }
+
+    public  void validarMedicoModificado(DetalleMedicoDTO medicoDTO) {
+        if (estaRepetidaCedulaMedico(medicoDTO.cedula())){
+            throw new ResourceNotFoundException("La cédula "+medicoDTO.cedula() + " está registrada con otro usuario");
+        }
+        if (estaRepetidoCorreoMedico(medicoDTO.correo())){
+            throw new ResourceNotFoundException("El correo "+medicoDTO.correo() + " está registrado con otro usuario");
+        }
     }
 
     public  void validarPaciente(RegistroPacienteDTO pacienteDTO) {

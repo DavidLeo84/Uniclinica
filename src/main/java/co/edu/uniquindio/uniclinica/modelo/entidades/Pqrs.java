@@ -1,5 +1,6 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
+import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPqrsDTO;
 import co.edu.uniquindio.uniclinica.modelo.enums.EstadoPqrs;
 import co.edu.uniquindio.uniclinica.modelo.enums.TipoPqrs;
 import jakarta.persistence.*;
@@ -35,17 +36,22 @@ public class Pqrs implements Serializable {
     private Cita cita;
 
     @Column
-    private Paciente paciente; // revisar si es valido el objeto para persistencia
-
-    @Column
     @Lob
     private String motivo;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column
     private EstadoPqrs estadoPqrs;
 
     @OneToMany(mappedBy = "pqrs")
     private List<Mensaje> mensajes;
 
+    public Pqrs(RegistroPqrsDTO datos, Cita cita) {
+        this.setFechaCreacion(datos.fechaCreacion());
+        this.setTipoPqrs(datos.tipoPqrs());
+        this.setMotivo(datos.motivo());
+        this.setEstadoPqrs(datos.estadoPqrs());
+        this.setCita(cita);
+
+    }
 }

@@ -2,6 +2,7 @@ package co.edu.uniquindio.uniclinica.servicios.interfaces;
 
 import co.edu.uniquindio.uniclinica.dto.administrador.ItemMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.*;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Paciente;
 import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ import java.util.List;
 @Service
 public interface PacienteServicio {
 
-    int registrarse(RegistroPacienteDTO pacienteDTO) throws Exception;
+    Paciente registrarse(RegistroPacienteDTO pacienteDTO);
 
-    int editarPerfil(DetallePacienteDTO pacienteDTO) throws Exception;
+    String editarPerfil(DetallePacienteDTO pacienteDTO);
 
     DetallePacienteDTO  verDetallePaciente(int codigo) throws Exception;
 

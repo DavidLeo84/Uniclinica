@@ -10,7 +10,9 @@ import co.edu.uniquindio.uniclinica.modelo.enums.EstadoPqrs;
 import co.edu.uniquindio.uniclinica.modelo.enums.EstadoUsuario;
 import co.edu.uniquindio.uniclinica.repositorios.*;
 import co.edu.uniquindio.uniclinica.servicios.interfaces.AdministradorServicio;
+import co.edu.uniquindio.uniclinica.servicios.validaciones.Validacion;
 import jakarta.validation.ValidationException;
+import co.edu.uniquindio.uniclinica.servicios.validaciones.excepciones.ResourceNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -35,17 +37,21 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     private final PacienteRepo pacienteRepo;
     private final HorarioRepo horarioRepo;
     private final DiaLibreRepo diaLibreRepo;
+    private final Validacion validacion;
 
 
     @Override
     public Medico crearMedico(RegistroMedicoDTO medicoDTO) throws Exception {
 
-        if (estaRepetidaCedula(medicoDTO.cedula())) {
+        validacion.validarMedico(medicoDTO);
+       /* if (estaRepetidaCedula(medicoDTO.cedula())) {
             throw new Exception("La cédula " + medicoDTO.cedula() + " ya está en uso");
         }
         if (estaRepetidoCorreo(medicoDTO.correo())) {
             throw new Exception("El correo " + medicoDTO.cedula() + " ya está en uso");
         }
+
+        */
         Medico medicoNuevo = new Medico();
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -89,24 +95,17 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     }
 
     @Override
-    public String actualizarMedico(DetalleMedicoDTO medicoDTO) throws Exception {
+    public Medico actualizarMedico(DetalleMedicoDTO medicoDTO){
 
-        Optional<Medico> opcional =medicoRepo.findById(medicoDTO.codigo());
-        if( opcional.isEmpty() ){
-            throw new Exception("No existe un médico con el código "+medicoDTO.codigo());
-        }
+        validacion.existenciaMedico(medicoDTO.codigo());
+
+       Optional<Medico> opcional =medicoRepo.findById(medicoDTO.codigo());
+
         Medico buscado = opcional.get();
+        buscado.actualizar(medicoDTO);
+        medicoRepo.save(buscado);
+        return buscado;
 
-        buscado.setCedula(medicoDTO.cedula() );
-        buscado.setTelefono(medicoDTO.telefono());
-        buscado.setNombre(medicoDTO.nombre() );
-        buscado.setEspecialidad( medicoDTO.especialidad() );
-        buscado.setCiudad(medicoDTO.ciudad());
-        buscado.setCorreo(medicoDTO.correo() );
-        buscado.setUrlFoto(medicoDTO.urlFoto());
-        medicoRepo.save( buscado );
-
-        return "el medico " + buscado.getNombre() + " fue actualizado con éxito";
     }
 
     @Override
@@ -118,10 +117,11 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 
         List<Cita> citas = citaRepo.buscarCitasMedico(buscado.getId());
 
+        /*
         if (citas.isEmpty()) {
-            throw new Exception("El médico " + opcional.get().getNombre() + "no tiene historial de citas");
+            throw new Exception("El médico " + opcional.get().getNombre() + " no tiene historial de citas");
         }
-
+         */
         for (Cita c : citas) {
 
             if (c.getEstadoCita().equals(EstadoCita.PROGRAMADA)) {
@@ -160,40 +160,16 @@ public class AdministradorServicioImpl implements AdministradorServicio {
 @Override
 public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
 
-    Optional<Medico> opcional = medicoRepo.findById(codigo);
-    Optional<DiaLibreMedico> optional = diaLibreRepo.findById(codigo);
-
-    if( opcional.isEmpty() ){
-        throw new Exception("No existe un médico con el código "+ codigo);
+    Medico medico = validacion.existenciaMedico(codigo);
+    if(medico.getEstado()==EstadoUsuario.INACTIVO){
+        throw new ValidationException("El Medico esta Inactivo");
     }
-
-    Medico buscado = opcional.get();
-    DiaLibreMedico diaBuscado = optional.get();
-
     List<HorarioMedico> horarios = horarioRepo.findAllByMedicoCodigo(codigo);
+    List<HorarioDTO> horariosDTO = horarios.stream()
+            .map(HorarioDTO::new)
+            .toList();
+    return new DetalleMedicoDTO(medico, horariosDTO);
 
-    List<HorarioDTO> horariosDTO = new ArrayList<>();
-
-    for( HorarioMedico h : horarios ){
-        horariosDTO.add( new HorarioDTO(
-                //h.getDia(),
-                h.getHoraInicio(),
-                h.getHoraSalida(),
-                h.getMedico()
-        ) );
-    }
-    return new DetalleMedicoDTO(
-            buscado.getId(),
-            buscado.getNombre(),
-            buscado.getCedula(),
-            buscado.getCiudad(),
-            buscado.getEspecialidad(),
-            buscado.getTelefono(),
-            buscado.getCorreo(),
-            buscado.getUrlFoto(),
-            horariosDTO
-            // buscado.getDiaLibre()
-    );
 }
 
     @Override
