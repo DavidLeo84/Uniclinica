@@ -42,6 +42,7 @@ public class Medico extends Usuario implements Serializable {
         this.setTelefono(medicoDTO.telefono());
         this.setNombre(medicoDTO.nombre());
         this.setEspecialidad(medicoDTO.especialidad());
+        this.setTipoSangre(medicoDTO.tipoSangre());
         this.setCiudad(medicoDTO.ciudad());
         this.setCorreo(medicoDTO.correo());
         this.setPassword(password);
@@ -54,6 +55,7 @@ public class Medico extends Usuario implements Serializable {
         this.setTelefono(medicoDTO.telefono());
         this.setNombre(medicoDTO.nombre());
         this.setEspecialidad(medicoDTO.especialidad());
+        this.setTipoSangre(medicoDTO.tipoSangre());
         this.setCiudad(medicoDTO.ciudad());
         this.setCorreo(medicoDTO.correo());
         this.setUrlFoto(medicoDTO.urlFoto());

@@ -14,7 +14,6 @@ public record RegistroAtencionDTO(
         String tratamiento,
         @Lob
         String notasMedicas,
-
         @Positive
         float precio
 ) {

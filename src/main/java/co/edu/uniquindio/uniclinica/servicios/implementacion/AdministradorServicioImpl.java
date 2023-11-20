@@ -44,23 +44,15 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     public Medico crearMedico(RegistroMedicoDTO medicoDTO) throws Exception {
 
         validacion.validarMedico(medicoDTO);
-       /* if (estaRepetidaCedula(medicoDTO.cedula())) {
-            throw new Exception("La cédula " + medicoDTO.cedula() + " ya está en uso");
-        }
-        if (estaRepetidoCorreo(medicoDTO.correo())) {
-            throw new Exception("El correo " + medicoDTO.cedula() + " ya está en uso");
-        }
-
-        */
         Medico medicoNuevo = new Medico();
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String passwordEncriptada = encoder.encode(medicoDTO.password());
-
         medicoNuevo.setNombre(medicoDTO.nombre());
         medicoNuevo.setCedula(medicoDTO.cedula());
         medicoNuevo.setCiudad(medicoDTO.ciudad());
         medicoNuevo.setEspecialidad(medicoDTO.especialidad());
+        medicoNuevo.setTipoSangre(medicoDTO.tipoSangre());
         medicoNuevo.setTelefono(medicoDTO.telefono());
         medicoNuevo.setCorreo(medicoDTO.correo());
         medicoNuevo.setPassword(passwordEncriptada);
@@ -111,36 +103,21 @@ public class AdministradorServicioImpl implements AdministradorServicio {
     @Override
     public String eliminarMedico(int idMedico) throws Exception {
 
-        Medico medico = validar(idMedico);
+        validacion.existenciaMedico(idMedico);
         Optional<Medico> opcional =medicoRepo.findById(idMedico);
         Medico buscado = opcional.get();
-
         List<Cita> citas = citaRepo.buscarCitasMedico(buscado.getId());
-
-        /*
-        if (citas.isEmpty()) {
-            throw new Exception("El médico " + opcional.get().getNombre() + " no tiene historial de citas");
-        }
-         */
         for (Cita c : citas) {
-
             if (c.getEstadoCita().equals(EstadoCita.PROGRAMADA)) {
-
                 throw new Exception("El médico " + opcional.get().getNombre() + "tiene citas programadas");
             }
-
                 buscado.setEstado(EstadoUsuario.INACTIVO);
                 medicoRepo.save( buscado );
-
                 Optional<DiaLibreMedico> dia = diaLibreRepo.findById(idMedico);
-
                 DiaLibreMedico diaLibre = dia.get();
-
                 if (diaLibre.getFechaLibre().isAfter(LocalDate.now())) {
-
                     diaLibreRepo.delete(diaLibre);
                 }
-
         }
         return "Médico eliminado con éxito";
     }
@@ -169,16 +146,7 @@ public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
             .map(HorarioDTO::new)
             .toList();
     return new DetalleMedicoDTO(medico, horariosDTO);
-
 }
-
-    @Override
-    public Medico buscarMedico(int id) throws Exception {
-        Medico medico = medicoRepo.findById(id).orElse(null);
-        if(medico == null)
-            throw new Exception("El medico no existe");
-        return medico;
-    }
 
     @Override
     public List<ItemPqrsDTO> listarPqrs() throws Exception{
@@ -189,11 +157,6 @@ public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
         return listaPqrs.stream()
                 .map(ItemPqrsDTO::new)
                 .toList();
-    }
-
-    @Override
-    public Medico actualizarMedico2(Medico medico) {
-        return medicoRepo.save(medico);
     }
 
     @Override
@@ -216,14 +179,9 @@ public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
                 m.getFechaMensaje()
         )).toList();
     }
-    /*
-    private List<RespuestaDTO> convertirRespuestasDTO(List<Mensaje> mensajes) {
-        return mensajes.stream().map(RespuestaDTO::new).toList();
-    }
 
-     */
     @Override
-    public int responderPqrs(int codigoPqrs, int idAdmin,
+    public Pqrs responderPqrs(int codigoPqrs, int idAdmin,
                              RegistroRespuestaPacienteDTO registro) throws Exception{
 
         Optional<Pqrs> opcional = pqrsRepo.findById(codigoPqrs);
@@ -246,7 +204,7 @@ public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
         pqrs.setEstadoPqrs(EstadoPqrs.EN_PROCESO);
         pqrsRepo.save(pqrs);
 
-        return pqrs.getCodigo();
+        return pqrs;
     }
     @Override
     public void cambiarEstadoPqrs(int codigoPqrs, EstadoPqrs nuevoEstado)throws Exception {
@@ -300,7 +258,6 @@ public DetalleMedicoDTO obtenerMedico(int codigo) throws Exception {
                     p.getNombre(),
                     p.getCiudad()
             ));
-
         }
         return listaPacientes;
     }

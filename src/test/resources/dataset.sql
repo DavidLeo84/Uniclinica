@@ -23,25 +23,25 @@ INSERT INTO paciente (ciudad, eps, fecha_nacimiento, id, tipo_sangre, cedula, te
 INSERT INTO paciente (ciudad, eps, fecha_nacimiento, id, tipo_sangre, cedula, telefono, nombre, alergias, url_foto) VALUES ( 2, 2, '1990-07-20', 4, 3, '44444444', '75654321', 'Otro Paciente2', 'Alergia a medicamentos','url_foto');
 INSERT INTO paciente (ciudad, eps, fecha_nacimiento, id, tipo_sangre, cedula, telefono, nombre, alergias, url_foto) VALUES ( 0, 1, '1985-03-15', 5, 4, '55555555', '12347578', 'Nuevo Paciente3', 'Sin alergias', 'url_foto');
 
-insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('666', 0, 'nombre Médico1', '6789012', 1, 'url_foto', 0, 6);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('666', 0, 'nombre Médico1', '6789012', 1, 'url_foto', 1, 6);
 insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('777', 1, 'nombre Médico2', '7890123', 2, 'url_foto', 1, 7);
-insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('888', 0, 'nombre Médico3', '8901234', 3, 'url_foto', 2, 8);
-insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('999', 1, 'nombre Médico4', '9012345', 2, 'url_foto', 1, 9);
-insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('323', 0, 'nombre Médico5', '0123456', 1, 'url_foto', 3, 10);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('888', 0, 'nombre Médico3', '8901234', 3, 'url_foto', 0, 8);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('999', 1, 'nombre Médico4', '9012345', 2, 'url_foto', 0, 9);
+insert into medico (cedula, ciudad, nombre, telefono, tipo_sangre, url_foto, especialidad, id) values('323', 0, 'nombre Médico5', '0123456', 1, 'url_foto', 5, 10);
 
-/*
+
 insert into administrador(id, nombre) values(11, 'admin1');
 insert into administrador(id, nombre) values(12, 'admin2');
 insert into administrador(id, nombre) values(13, 'admin3');
 insert into administrador(id, nombre) values(14, 'admin4');
 insert into administrador(id, nombre) values(15, 'admin5');
-*/
 
-insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (1, 0, 7, 1, '2023-11-20 09:30:00', NOW(), 'Motivo 1');
-insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (2, 0, 7, 1, '2023-11-18 10:00:00', NOW(), 'Motivo 2');
-insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (3, 0, 7, 1, '2023-11-19 11:30:00', NOW(), 'Motivo 3');
-insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (4, 0, 7, 1, '2023-11-20 14:00:00', NOW(), 'Motivo 4');
-insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (5, 0, 7, 1, '2023-11-21 15:30:00', NOW(), 'Motivo 5');
+
+insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (1, 0, 7, 1, '2023-10-23 09:30:00', NOW(), 'Motivo 1');
+insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (2, 0, 7, 1, '2023-11-25 10:00:00', NOW(), 'Motivo 2');
+insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (3, 0, 7, 2, '2023-11-19 11:30:00', NOW(), 'Motivo 3');
+insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (4, 0, 7, 2, '2023-11-20 14:00:00', NOW(), 'Motivo 4');
+insert into cita (codigo, estado_cita, medico_id, paciente_id, fecha_cita, fecha_creacion, motivo) values (5, 0, 7, 3, '2023-11-21 15:30:00', NOW(), 'Motivo 5');
 
 insert into atencion(cita_codigo, codigo, precio, diagnostico, notas_medicas, tratamiento) values (1, 1, 80000, 'Nuevo diagnóstico', 'Nuevas notas médicas', 'Nuevo tratamiento');
 insert into atencion(cita_codigo, codigo, precio, diagnostico, notas_medicas, tratamiento) values (2, 2, 80000, 'Otro diagnóstico', 'Otras notas médicas', 'Otro tratamiento');
@@ -52,18 +52,18 @@ insert into atencion(cita_codigo, codigo, precio, diagnostico, notas_medicas, tr
 
 
 
-insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (6,'2023-11-11' ,6);
+insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (6,'2023-12-11' ,6);
 insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (7,'2023-11-12', 7);
 insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (8,'2023-11-13', 8);
 insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (9,'2023-11-14' ,9);
 insert into dia_libre_medico (codigo, fecha_libre, medico_id) VALUES (10,'2023-11-15', 10);
 
 
-insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (1, 6, '09:00:00', '16:00:00');
-insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (2, 6, '09:00:00', '16:00:00');
-insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (3, 6, '09:00:00', '16:00:00');
-insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (4, 6, '09:00:00', '16:00:00');
-insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (5, 6, '09:00:00', '16:00:00');
+insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (1, 6, '2023-10-09 07:00:00', '2023-10-09 17:00:00');
+insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (2, 6, '2023-10-10 07:00:00', '2023-10-10 17:00:00');
+insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (3, 6, '2023-10-11 07:00:00', '2023-10-11 17:00:00');
+insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (4, 6, '2023-10-12 07:00:00', '2023-10-12 17:00:00');
+insert into horario_medico(codigo, medico_id, hora_inicio, hora_salida) VALUES (5, 6, '2023-10-13 07:00:00', '2023-10-13 17:00:00');
 
 
 

@@ -5,6 +5,7 @@ import co.edu.uniquindio.uniclinica.modelo.entidades.HorarioMedico;
 import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
 import co.edu.uniquindio.uniclinica.modelo.entidades.Medico;
 import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
+import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -24,11 +25,14 @@ public record DetalleMedicoDTO(
         String nombre,
         @NotNull
 
+        @Length(max = 10)
         String cedula,
         @NotNull
         Ciudad ciudad,
         @NotNull
         Especialidad especialidad,
+        @NotNull
+        TipoSangre tipoSangre,
         @NotEmpty
         @Length(max = 20)
         String telefono,
@@ -50,6 +54,7 @@ public record DetalleMedicoDTO(
                         medico.getCedula(),
                         medico.getCiudad(),
                         medico.getEspecialidad(),
+                        medico.getTipoSangre(),
                         medico.getTelefono(),
                         medico.getCorreo(),
                         medico.getUrlFoto(),

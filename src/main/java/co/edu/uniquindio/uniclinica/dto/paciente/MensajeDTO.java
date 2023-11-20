@@ -1,6 +1,7 @@
 package co.edu.uniquindio.uniclinica.dto.paciente;
 
 import co.edu.uniquindio.uniclinica.modelo.entidades.Cuenta;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Mensaje;
 import co.edu.uniquindio.uniclinica.modelo.entidades.Pqrs;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -16,8 +17,20 @@ public record MensajeDTO(
         @NotEmpty
         String contenido,
         @NotNull
-        Cuenta cuenta,
+        int cuenta,
         @NotNull
-        Pqrs pqrs
+        int pqrs
 ) {
+        public MensajeDTO (Mensaje mensaje) {
+
+                this(
+                        mensaje.getCodigo(),
+                        mensaje.getFechaMensaje(),
+                        mensaje.getContenido(),
+                        mensaje.getCuenta().getId(),
+                        mensaje.getPqrs().getCodigo()
+
+
+                        );
+        }
 }

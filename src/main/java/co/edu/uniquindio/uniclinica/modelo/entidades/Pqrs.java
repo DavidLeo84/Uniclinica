@@ -45,7 +45,7 @@ public class Pqrs implements Serializable {
 
     @OneToMany(mappedBy = "pqrs")
     private List<Mensaje> mensajes;
-
+/*
     public Pqrs(RegistroPqrsDTO datos, Cita cita) {
         this.setFechaCreacion(datos.fechaCreacion());
         this.setTipoPqrs(datos.tipoPqrs());
@@ -54,4 +54,6 @@ public class Pqrs implements Serializable {
         this.setCita(cita);
 
     }
+
+ */
 }

@@ -1,9 +1,9 @@
 package co.edu.uniquindio.uniclinica.servicios.validaciones;
 
 import co.edu.uniquindio.uniclinica.dto.administrador.DetalleMedicoDTO;
-import co.edu.uniquindio.uniclinica.dto.paciente.RegistroPacienteDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.RegistroMedicoDTO;
 import co.edu.uniquindio.uniclinica.modelo.entidades.*;
+import co.edu.uniquindio.uniclinica.modelo.enums.EstadoCita;
 import co.edu.uniquindio.uniclinica.repositorios.*;
 import co.edu.uniquindio.uniclinica.servicios.validaciones.excepciones.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +36,32 @@ public class Validacion {
         return medico;
     }
 
-    public void existenciaPaciente(int id, String cedula) {
+    public Paciente existenciaPaciente(String cedula) {
 
-        Paciente paciente = pacienteRepo.findById(id).orElse(null);
+        Paciente paciente = pacienteRepo.findByCedula(cedula);
 
-        if (paciente == null && paciente.getCedula().equals(cedula))
-            throw new ResourceNotFoundException("El paciente con " + id + " no se encuentra registrado");
+        if (paciente != null )
+            throw new ResourceNotFoundException("El paciente con " + cedula + " se encuentra registrado");
+        return paciente;
+    }
+
+
+    public Paciente existenciaIdPaciente(int id) {
+
+        Optional<Paciente> optional = pacienteRepo.findById(id);
+        Paciente paciente = optional.get();
+
+        if (paciente != null )
+            throw new ResourceNotFoundException("El paciente con el " + id + " ya se encuentra registrado");
+        return paciente;
     }
 
     public void existenciaCita(int codigo) {
 
         Cita cita = citaRepo.findById(codigo).orElse(null);
 
-        if (cita == null) {
-            throw new ResourceNotFoundException("La cita con " + codigo + " no se encuentra registrada");
+        if (cita == null || cita.getEstadoCita().equals(EstadoCita.CANCELADA)) {
+            throw new ResourceNotFoundException("La cita con " + codigo + " no se encuentra registrada o está cancelada");
         }
     }
     
@@ -71,7 +83,7 @@ public class Validacion {
         }
     }
 
-    public  void validarMedicoModificado(DetalleMedicoDTO medicoDTO) {
+    public  void validarMedicoActualizado(DetalleMedicoDTO medicoDTO) {
         if (estaRepetidaCedulaMedico(medicoDTO.cedula())){
             throw new ResourceNotFoundException("La cédula "+medicoDTO.cedula() + " está registrada con otro usuario");
         }
@@ -80,12 +92,12 @@ public class Validacion {
         }
     }
 
-    public  void validarPaciente(RegistroPacienteDTO pacienteDTO) {
-        if (estaRepetidaCedulaPaciente(pacienteDTO.cedula())){
-            throw new ResourceNotFoundException("La cédula "+pacienteDTO.cedula() + " está registrada con otro usuario");
+    public  void validarPacienteActualizado(String cedula, String correo) {
+        if (!estaRepetidaCedulaPaciente(cedula)){
+            throw new ResourceNotFoundException("La cédula "+ cedula + " está registrada con otro usuario");
         }
-        if (estaRepetidoCorreoPaciente(pacienteDTO.correo())){
-            throw new ResourceNotFoundException("El correo "+pacienteDTO.correo() + " está registrado con otro usuario");
+        if (!estaRepetidoCorreoPaciente(correo)){
+            throw new ResourceNotFoundException("El correo " + correo + " está registrado con otro usuario");
         }
     }
 

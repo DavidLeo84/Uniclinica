@@ -1,6 +1,7 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
 import co.edu.uniquindio.uniclinica.dto.administrador.RegistroRespuestaDTO;
+import co.edu.uniquindio.uniclinica.modelo.enums.TipoMensaje;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,9 @@ public class Mensaje implements Serializable {
     @Column(nullable = false)
     private LocalDateTime fechaMensaje;
 
-    private String tipo;
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private TipoMensaje tipoMensaje;
 
     @Lob
     private String contenido;

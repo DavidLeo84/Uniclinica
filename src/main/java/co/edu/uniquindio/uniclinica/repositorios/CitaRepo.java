@@ -28,4 +28,9 @@ public interface CitaRepo extends JpaRepository<Cita, Integer> {
 
     @Query("select cit from Cita cit join cit.medico med where med.id = :codigoMedico and cit.estadoCita = :estadoCita")
     List<Cita> buscarCitasMedicoEstado(EstadoCita estadoCita, int codigoMedico);
+
+    @Query("select cit from Cita cit join cit.paciente pac where pac.id = :codigoPaciente and cit.estadoCita = :estadoCita")
+    List<Cita> buscarCitasPacienteEstado (EstadoCita estadoCita, int codigoPaciente);
+
+
 }

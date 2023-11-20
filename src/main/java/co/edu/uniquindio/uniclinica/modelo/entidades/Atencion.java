@@ -1,6 +1,7 @@
 package co.edu.uniquindio.uniclinica.modelo.entidades;
 
 import co.edu.uniquindio.uniclinica.dto.medico.RegistroAtencionDTO;
+import co.edu.uniquindio.uniclinica.dto.paciente.DetalleAtencionDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,7 +38,7 @@ public class Atencion implements Serializable {
     @JoinColumn(nullable = false)
     private Cita cita;
 
-    /*
+
     public Atencion(RegistroAtencionDTO datos, Cita cita){
         this.setDiagnostico(datos.diagnostico());
         this.setTratamiento(datos.tratamiento());
@@ -46,12 +47,12 @@ public class Atencion implements Serializable {
         this.setCita(cita);
     }
 
-    public void actualizar(DetalleAtencionMedicaDTO datos, Cita cita) {
+    public void actualizar(DetalleAtencionDTO datos, Cita cita) {
         this.setDiagnostico(datos.diagnostico());
         this.setTratamiento(datos.tratamiento());
         this.setNotasMedicas(datos.notasMedicas());
         this.setCita(cita);
     }
 
-    */
+
 }

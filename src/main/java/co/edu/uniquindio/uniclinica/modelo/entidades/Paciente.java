@@ -40,7 +40,7 @@ public class Paciente extends Usuario implements Serializable {
     @OneToMany(mappedBy = "paciente")
     private List<Transaccion> transacciones;
 
-    /*
+
     public Paciente(RegistroPacienteDTO pacienteDTO, String password) {
         //datos de la cuenta
         this.setCorreo(pacienteDTO.correo());
@@ -59,21 +59,19 @@ public class Paciente extends Usuario implements Serializable {
         this.setAlergias(pacienteDTO.alergias());
         this.setTipoSangre(pacienteDTO.tipoSangre());
     }
-    public void actualizar(DetallePacienteDTO datos) {
+    public void actualizar(DetallePacienteDTO pacienteDTO) {
         //Datos de la Cuenta
-        this.setCorreo( datos.correo() );
+        this.setCorreo( pacienteDTO.correo() );
         //Datos del Usuario
-        this.setNombre( datos.nombre() );
-        this.setCedula( datos.cedula() );
-        this.setTelefono( datos.telefono() );
-        this.setCiudad( datos.ciudad() );
-        this.setUrlFoto( datos.urlFoto() );
+        this.setNombre( pacienteDTO.nombre() );
+        this.setCedula( pacienteDTO.cedula() );
+        this.setTelefono( pacienteDTO.telefono() );
+        this.setCiudad( pacienteDTO.ciudad() );
+        this.setUrlFoto( pacienteDTO.urlFoto() );
         //Datos del Paciente
-        this.setFechaNacimiento( datos.fechaNacimiento() );
-        this.setEps( datos.eps() );
-        this.setAlergias( datos.alergias() );
-        this.setTipoSangre( datos.tipoSangre() );
+        this.setFechaNacimiento( pacienteDTO.fechaNacimiento() );
+        this.setEps( pacienteDTO.eps() );
+        this.setAlergias( pacienteDTO.alergias() );
+        this.setTipoSangre( pacienteDTO.tipoSangre() );
     }
-
-     */
 }
