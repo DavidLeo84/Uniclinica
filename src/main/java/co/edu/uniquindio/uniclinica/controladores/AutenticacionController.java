@@ -31,7 +31,7 @@ public class AutenticacionController {
         TokenDTO tokenDTO = autenticacionServicio.login(loginDTO);
         return ResponseEntity.ok().body(new MensajeDTO<>(false, tokenDTO));
     }
-    @PostMapping("/registrarse")
+    @PostMapping("/registrar-paciente")
     public ResponseEntity<MensajeDTO<String>> registrarse(@Valid @RequestBody RegistroPacienteDTO pacienteDTO) throws Exception{
         pacienteServicio.registrarse(pacienteDTO);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Paciente registrado correctamente") );
