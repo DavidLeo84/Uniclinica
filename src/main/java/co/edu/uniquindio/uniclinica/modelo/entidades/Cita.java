@@ -48,7 +48,7 @@ public class Cita implements Serializable {
 
     @OneToMany(mappedBy = "cita")
     private List<Pqrs> pqrs;
-/*
+
     public Cita(LocalDateTime fechaCreacion,LocalDateTime  fechaCita, String motivo, Paciente paciente, Medico medico, EstadoCita estadoCita) {
         this.fechaCreacion = fechaCreacion;
         this.fechaCita = fechaCita;
@@ -58,5 +58,5 @@ public class Cita implements Serializable {
         this.estadoCita = estadoCita;
     }
 
- */
+
 }

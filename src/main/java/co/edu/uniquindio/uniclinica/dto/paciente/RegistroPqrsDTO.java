@@ -1,6 +1,7 @@
 package co.edu.uniquindio.uniclinica.dto.paciente;
 
 import co.edu.uniquindio.uniclinica.dto.RespuestaDTO;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Cita;
 import co.edu.uniquindio.uniclinica.modelo.entidades.Mensaje;
 import co.edu.uniquindio.uniclinica.modelo.enums.EstadoPqrs;
 import co.edu.uniquindio.uniclinica.modelo.enums.TipoPqrs;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public record RegistroPqrsDTO(
 
-        @NotNull
-        int codigoPqrs,
+        //@NotNull
+        //int codigoPqrs,
         LocalDateTime fechaCreacion,
         @NotNull
         TipoPqrs tipoPqrs,
@@ -27,12 +28,13 @@ public record RegistroPqrsDTO(
         EstadoPqrs estadoPqrs
 
 ) {
-     /*   public RegistroPqrsDTO(Mensaje m){
+        public RegistroPqrsDTO(Mensaje m, Cita c){
                 this(
-                        m.getPqrs().getCodigo(),
+
                         m.getFechaMensaje(),
+                        m.getPqrs().getTipoPqrs(),
                         m.getContenido(),
-                        m.getCuenta().getId(),
+                        c.getCodigo(),
                         m.getCuenta().getId(),
                         m.getPqrs().getMotivo(),
                         m.getPqrs().getEstadoPqrs()
@@ -40,6 +42,6 @@ public record RegistroPqrsDTO(
                         );
         }
 
-      */
+
 
 }

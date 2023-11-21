@@ -7,7 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AutenticacionServicio {
 
-    //JwtDTO login(LoginDTO loginDTO) throws Exception;
-
     TokenDTO login(LoginDTO loginDTO) throws Exception;
 }

@@ -69,20 +69,14 @@ public class MedicoServicioImpl implements MedicoServicio {
     @Override
     public List<ItemCitaDTO> listarCitasPendientesDia(int idMedico) throws Exception {
 
-        LocalDateTime fechaSistema = LocalDateTime.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy MMMM dd");
-        String fechaAhora = formato.format(fechaSistema);
-
+        LocalDateTime fechaHoy = LocalDateTime.now();
         List<Cita> citas = citaRepo.buscarCitasMedico(idMedico);
-
         if (citas.isEmpty()) {
             throw new Exception("No tiene citas");
         }
-
         List<ItemCitaDTO> citasPendientesDia = new ArrayList<>();
-
         for (Cita c : citas) {
-            if (c.getFechaCita().equals(fechaAhora)) {
+            if (c.getFechaCita().isAfter(fechaHoy)) {
                 citasPendientesDia.add(new ItemCitaDTO(
                         c.getCodigo(),
                         c.getPaciente().getCedula(),
@@ -98,7 +92,7 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     @Override
-    public RegistroAtencionDTO atenderCita(String cedulaPaciente, int idMedico) throws Exception{
+    public RegistroAtencionDTO atenderCita(String cedulaPaciente, int idMedico) throws Exception {
 
         String diagnostico = "";
         String tratamiento = "";
@@ -118,7 +112,9 @@ public class MedicoServicioImpl implements MedicoServicio {
         for (Cita ct : citasDia) {
             if (!LocalDateTime.now().equals(ct.getFechaCita())) {
                 throw new Exception("El paciente no tiene cita asignada hoy");
-            }else{
+            } else {
+                buscada.setEstadoCita(EstadoCita.COMPLETADA);
+                citaRepo.save(buscada);
                 nueva.setDiagnostico(diagnostico);
                 nueva.setTratamiento(tratamiento);
                 nueva.setNotasMedicas(notasMedicas);
@@ -133,14 +129,14 @@ public class MedicoServicioImpl implements MedicoServicio {
                 nueva.getNotasMedicas(),
                 nueva.getPrecio()
         );
-
     }
 
-    public List<ItemAtencionDTO> listarAtencionesPaciente(String cedulaPaciente) throws Exception {
+    @Override
+    public List<ItemAtencionDTO> listarAtencionesPaciente(int idPaciente) throws Exception {
 
-        List<Atencion> atenciones = atencionRepo.findAllByCita_Paciente_Cedula(cedulaPaciente);
+        List<Atencion> atenciones = atencionRepo.findAllByCita_Paciente_id(idPaciente);
         if (atenciones.isEmpty()) {
-            throw new Exception("El paciente con cédula " + cedulaPaciente+ "no tiene historial clinico");
+            throw new Exception("El paciente con id " + idPaciente + " no tiene historial clinico");
         }
         List<ItemAtencionDTO> atencion = new ArrayList<>();
         for (Atencion a : atenciones) {
@@ -157,15 +153,45 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     @Override
+    public List<ItemCitaDTO> listarCitasRealizadasMedico(int idMedico) throws Exception{
+
+        List<Cita> citas = citaRepo.buscarCitasMedico(idMedico);
+        if (citas.isEmpty()) {
+            throw new Exception("No hay citas que mostrar");
+        }
+        List<ItemCitaDTO> lista = new ArrayList<>();
+
+        for (Cita c : citas) {
+
+            if (c.getFechaCita().isBefore(LocalDateTime.now())) {
+                lista.add(new ItemCitaDTO(
+                        c.getCodigo(),
+                        c.getPaciente().getCedula(),
+                        c.getPaciente().getNombre(),
+                        c.getMedico().getNombre(),
+                        c.getMedico().getEspecialidad(),
+                        c.getEstadoCita(),
+                        c.getFechaCita()
+                ));
+            }
+        }
+        return lista;
+    }
+
+    @Override
     public LocalDate agendarDiaLibre(int idMedico, LocalDate fechaLibre) throws Exception{
 
-        //LocalDateTime fechaSistema = LocalDateTime.now();
-        LocalDate fechaSys = LocalDate.now();
+        LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy MMMM dd, HH:mm");
         String fecha = formato.format(fechaLibre);
 
-        if (fechaLibre.isBefore(fechaSys)) {
+        if (fechaLibre.isBefore(fechaHoy)) {
             throw new Exception("Fecha invalida");
+        }
+        Optional<DiaLibreMedico> optional = diaLibreRepo.findById(idMedico);
+        DiaLibreMedico agendado = optional.get();
+        if (agendado.getFechaLibre().isAfter(LocalDate.now())) {
+            throw new Exception("Ya tiene una fecha agendada como día libre");
         }
         List<Cita> citas = citaRepo.buscarCitasMedico(idMedico);
 
@@ -189,58 +215,45 @@ public class MedicoServicioImpl implements MedicoServicio {
     }
 
     public LocalDate modificarDiaLibre(int idMedico, LocalDate nuevoDiaLibre) throws Exception {
+        LocalDate fechaHoy = LocalDate.now();
 
+        if (nuevoDiaLibre.isBefore(fechaHoy)) {
+            throw new Exception("Fecha invalida");
+        }
+        List<Cita> citas = citaRepo.buscarCitasMedicoEstado(EstadoCita.PROGRAMADA,idMedico);
+        for ( Cita c : citas) {
+            if (c.getFechaCita().equals(nuevoDiaLibre)) {
+                throw new Exception("El médico tiene fechas de días agendadas en la fecha solicitada");
+            }
+        }
+        if(!buscarDiaLibre(idMedico)) {
+            throw new Exception("El médico no tiene fecha de día libre agendado");
+        }
         Optional<DiaLibreMedico> encontrado = diaLibreRepo.findById(idMedico);
         DiaLibreMedico diaLibre = encontrado.get();
+        diaLibreRepo.delete(diaLibre);
 
-        if (encontrado.isEmpty()) {
-            throw new Exception("El médico " + encontrado.get().getMedico().getNombre() + " no tiene fecha de día libre agendado");
-        }
-        diaLibre.setFechaLibre(nuevoDiaLibre);
-        diaLibreRepo.save(diaLibre);
-        return diaLibre.getFechaLibre();
+        DiaLibreMedico cambioDia = new DiaLibreMedico();
+        cambioDia.setFechaLibre(nuevoDiaLibre);
+        diaLibreRepo.save(cambioDia);
+        return cambioDia.getFechaLibre();
     }
 
     private boolean buscarDiaLibre(int codigo) throws Exception {return diaLibreRepo.findById(codigo) != null;}
 
     public String cancelarDiaLibre(int idMedico) throws Exception{
 
-        if(buscarDiaLibre(idMedico)) {
-            throw new Exception("El médico no tiene fecha de día libre agendado");
-        }
+
         List<DiaLibreMedico> dias = diaLibreRepo.findByCodigo(idMedico);
 
         for ( DiaLibreMedico dm : dias) {
 
             if (dm.getFechaLibre().isAfter(LocalDate.now())) {
-                dias.remove(dm);
+                diaLibreRepo.delete(dm);
             }
-            diaLibreRepo.delete(dm);
         }
         return "El dia libre agendado fue cancelado con éxito";
     }
 
-    @Override
-    public List<ItemCitaDTO> listarCitasRealizadasMedico(int idMedico) throws Exception{
 
-        List<Cita> citas = citaRepo.buscarCitasMedico(idMedico);
-        if (citas.isEmpty()) {
-            throw new Exception("No hay citas que mostrar");
-        }
-        List<ItemCitaDTO> lista = new ArrayList<>();
-
-        for (Cita c : citas) {
-
-            lista.add(new ItemCitaDTO(
-                    c.getCodigo(),
-                    c.getPaciente().getCedula(),
-                    c.getPaciente().getNombre(),
-                    c.getMedico().getNombre(),
-                    c.getMedico().getEspecialidad(),
-                    c.getEstadoCita(),
-                    c.getFechaCita()
-            ));
-        }
-        return lista;
-    }
 }

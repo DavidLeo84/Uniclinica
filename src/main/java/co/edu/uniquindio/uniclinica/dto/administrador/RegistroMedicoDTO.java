@@ -1,7 +1,9 @@
 package co.edu.uniquindio.uniclinica.dto.administrador;
 
+import co.edu.uniquindio.uniclinica.modelo.entidades.Medico;
 import co.edu.uniquindio.uniclinica.modelo.enums.Ciudad;
 import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
+import co.edu.uniquindio.uniclinica.modelo.enums.TipoSangre;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,13 +18,15 @@ public record RegistroMedicoDTO(
         @Length(max = 200)
         String nombre,
 
-        @NotBlank
-        @Length(max = 10)
+        @NotNull
+
         String cedula,
         @NotNull
         Ciudad ciudad,
         @NotNull
         Especialidad especialidad,
+        @NotNull
+        TipoSangre tipoSangre,
         @NotBlank
         @Length(max = 20)
         String telefono,
@@ -37,4 +41,20 @@ public record RegistroMedicoDTO(
         @NotEmpty
         List<HorarioDTO> horarios
 ) {
+
+        public RegistroMedicoDTO(Medico medico, List<HorarioDTO>horarios) {
+                this(
+                        medico.getNombre(),
+                        medico.getCedula(),
+                        medico.getCiudad(),
+                        medico.getEspecialidad(),
+                        medico.getTipoSangre(),
+                        medico.getTelefono(),
+                        medico.getCorreo(),
+                        medico.getPassword(),
+                        medico.getUrlFoto(),
+                        horarios
+                        );
+
+        }
 }

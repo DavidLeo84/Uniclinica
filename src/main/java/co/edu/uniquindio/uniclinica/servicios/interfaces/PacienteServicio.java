@@ -1,7 +1,13 @@
 package co.edu.uniquindio.uniclinica.servicios.interfaces;
 
+import co.edu.uniquindio.uniclinica.dto.CambiarPasswordDTO;
+import co.edu.uniquindio.uniclinica.dto.EmailDTO;
+import co.edu.uniquindio.uniclinica.dto.administrador.DetalleMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.administrador.ItemMedicoDTO;
 import co.edu.uniquindio.uniclinica.dto.paciente.*;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Cita;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Paciente;
+import co.edu.uniquindio.uniclinica.modelo.entidades.Pqrs;
 import co.edu.uniquindio.uniclinica.modelo.enums.Especialidad;
 import org.springframework.stereotype.Service;
 
@@ -11,30 +17,35 @@ import java.util.List;
 @Service
 public interface PacienteServicio {
 
-    int registrarse(RegistroPacienteDTO pacienteDTO) throws Exception;
+    Paciente registrarse(RegistroPacienteDTO pacienteDTO);
 
-    int editarPerfil(DetallePacienteDTO pacienteDTO) throws Exception;
+    Paciente editarPerfil(DetallePacienteDTO pacienteDTO);
 
     DetallePacienteDTO  verDetallePaciente(int codigo) throws Exception;
 
-    void inactivarCuenta(int id) throws Exception;
+    Paciente buscarPaciente(int id) throws Exception;
 
-    void enviarLinkRecuperacion() throws Exception;
+    DetallePacienteDTO obtenerPaciente(int id) throws Exception;
 
-    String cambiarPassword(String passwordActualDTO, String passwordNewDTO,
-                           DetallePacienteDTO pacienteDTO) throws Exception;
+    String eliminarPaciente(int id) throws Exception;
+
+    EmailDTO enviarLinkRecuperacion(String cedula) throws Exception ;
+
+    String cambiarPassword(int id, String passwordNuevo) throws Exception;
 
 
-    int crearCita(RegistroCitaDTO citaDTO, String cedulaPaciente, LocalDateTime fechaCita,
+    Cita crearCita(RegistroCitaDTO citaDTO, String cedulaPaciente, LocalDateTime fechaCita,
                   Especialidad especialidad) throws Exception;
 
     List<ItemMedicoDTO> listarPorEspecialidad(Especialidad especialidad) throws Exception;
 
-    DetalleCitaDTO modificarCita(int codigoCita) throws Exception;
+    Cita buscarCita(int id) throws Exception;
+
+    int modificarCita(DetalleCitaDTO citaDTO) throws Exception;
 
     String cancelarCita(int codigoCita) throws Exception;
 
-    int crearPqrs(RegistroPqrsDTO pqrsDTO) throws Exception;
+    Pqrs crearPqrs(RegistroPqrsDTO pqrsDTO) throws Exception;
 
     List<ItemPqrsPacienteDTO> listarPqrsPaciente(int id) throws Exception;
 
@@ -51,7 +62,7 @@ public interface PacienteServicio {
 
     List<ItemCitaDTO> listarCitasPendientesPaciente(int codigoPaciente) throws Exception;
 
-    List<ItemCitaDTO> filtrarCitasMedico(int idMedico) throws Exception;
+    List<ItemCitaDTO> filtrarCitasMedico(int idPaciente, int idMedico) throws Exception;
 
 
 }

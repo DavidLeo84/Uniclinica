@@ -21,7 +21,7 @@ public interface MedicoServicio {
 
     RegistroAtencionDTO atenderCita(String cedulaPaciente, int idMedico) throws Exception;
 
-    List<ItemAtencionDTO> listarAtencionesPaciente(String cedulaPaciente) throws Exception ;
+    List<ItemAtencionDTO> listarAtencionesPaciente(int idPaciente) throws Exception ;
 
     LocalDate agendarDiaLibre(int idMedico, LocalDate fechaLibre) throws Exception;
 
